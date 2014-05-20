@@ -134,6 +134,7 @@ ul.nav {
 	margin-bottom: 18px;
 	border-bottom: 1px solid #eeeeee;
 	padding: 0 0 9px;
+	padding-top: 100px;
 }
 
 #main article footer{
@@ -235,6 +236,7 @@ video {
 
 .page-template-page-homepage-php #main article{
 	border-bottom: none;
+	background-color: @asc-orange; 
 }
 
 .page-template-page-homepage-php .hero-unit,
@@ -531,6 +533,11 @@ li.previous a:hover:before{
 	padding: 8px 0;
 }
 
+.post_content{
+  	width: 75%;
+	margin: 0 auto;
+}
+
 blockquote.pull-left{
 	padding-right: 15px;
 }
@@ -599,5 +606,21 @@ blockquote.pull-left{
 	.comment .vcard .comment-text{
 		padding-left: 0;
 		padding-right: 0;
+	}
+}
+
+.info-block{
+	background-color: rgba(255,255,255,.1); 
+	border-radius: 2px;
+	padding: 30px 30px 60px;
+	margin-left: 15px;
+	color: @main-font-color;
+	&:first-child{
+		margin-left: 0;
+	}
+	&.col-sm-32{
+		font-size: 18px;
+		width: 32%;
+		float: left;
 	}
 }

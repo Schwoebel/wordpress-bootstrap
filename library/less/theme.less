@@ -136,6 +136,145 @@
   }
 }
 
+#inner-footer{
+  width: 100%;
+  max-width: 1250px;
+  p{
+    margin-bottom: 0;
+    margin-top: 10px;
+  }
+  h3{
+    color: #fff;
+  }
+  #spacer{
+    margin-bottom: 50px;
+  }
+  .navbar-brand{
+    padding: 0 0;
+  }
+  nav{
+    padding-left: 0;
+  }
+  ul{
+    list-style: none;
+    border-left: 1px solid rgba(255,255,255,.1);
+    height: 100%;
+    padding-left: 20px;
+    li{
+      color: @asc-orange;
+      h4, a{
+        color: white;
+      }
+      h4{
+        text-transform: uppercase;
+      }
+      a{
+        letter-spacing: 1.5px;
+        line-height: 2.5;
+        margin-left: 10px;
+      }
+      &:before{
+         content: "\00BB";
+      }
+      &:first-child{
+        &:before{
+          content: none;
+        }
+      }
+    }
+  }
+  h3{
+    text-align: center;
+  }
+  p{
+    text-align: right;
+  }
+
+}
+.project_grid{
+  padding: 40px 0 0 0;
+  .projekt_grid_item{
+    padding: 0;
+    img{
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+    }
+    .project_info_overlay{
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255,255,255,.7);
+      padding: 10% 10%;
+      display:none;
+      .btn-info{
+        background: @asc-orange;
+        border: none;
+        &:hover{
+          background:lighten(@asc-orange, 20%);
+        }
+      }
+    }
+    &:hover{
+      .project_info_overlay{
+        display: block;
+      }
+    }
+  }
+  h1{
+    text-align: center;
+  }
+}
+
+#carousel{
+  background:#fff;
+  img{
+    width: 100%;
+  }
+  .overlay{
+    position: absolute;
+    height: 100%;
+    background: rgba(0,0,0,.7);
+    color: white;
+    .inner-overlay{
+      display: block;
+      margin: 0 10% 0 20%;
+      float: none;
+      height: 100%;
+      padding: 20% 0 0 0;
+      h2{
+        font-size: @slideshow-header;
+        padding-left: 15px;
+      }
+      p{
+        font-size: @slideshow-subheader;
+        line-height: 1.5;
+        padding-left: 15px;
+        margin-bottom: 50px;
+      }
+      li{
+        font-size: @slideshow-bulletpoints;
+        line-height: 2.5;
+      }
+    }
+  }
+}
+
+.top_blocks{
+  margin-bottom: 75px;
+}
+
+.mid_start_slideshow{
+  .front-page-bullet-list{
+    li{
+      list-style-image: url('../img/check.png');
+      padding-left: 10px;
+    }
+  }
+}
+
+
 // Undo rounded corners in static and fixed navbars
 .navbar-static-top,
 .navbar-fixed-top,
@@ -245,3 +384,5 @@
   @shadow: inset 0 1px 3px rgba(0,0,0,.05), 0 1px 0 rgba(255,255,255,.1);
   .box-shadow(@shadow);
 }
+
+

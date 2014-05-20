@@ -8,6 +8,7 @@
 // Provide a static navbar from which we expand to create full-width, fixed, and
 // other navbar variations.
 
+
 .navbar {
   position: relative;
   min-height: @navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
@@ -30,10 +31,6 @@
 
 .navbar-header {
   .clearfix();
-
-  @media (min-width: @grid-float-breakpoint) {
-    float: left;
-  }
 }
 
 
@@ -54,6 +51,7 @@
   padding-left:  @navbar-padding-horizontal;
   border-top: 1px solid transparent;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
+  background-color: @asc-light-orange;
   .clearfix();
   -webkit-overflow-scrolling: touch;
 
@@ -61,30 +59,56 @@
     overflow-y: auto;
   }
 
-  @media (min-width: @grid-float-breakpoint) {
-    width: auto;
-    border-top: 0;
-    box-shadow: none;
+  
+  ul{
+    list-style: none;
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 60px 0;
+    li{
+      float:left;
+      margin-left: 40px;
+      position: relative;
+      a{
+        color: @main-link-color;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: 600;
+        &:hover{
+          color:@asc-orange;
+        }
 
-    &.collapse {
-      display: block !important;
-      height: auto !important;
-      padding-bottom: 0; // Override default setting
-      overflow: visible !important;
+      }
+      &.current-menu-item{
+        a{
+          color: @asc-orange;
+          
+        }
+        &:before{
+          content: '';
+          width: 0;
+          height: 0;
+          border: 23px solid transparent;
+          border-bottom-color: #fff;
+          position: absolute;
+          top: -106px;
+          left: 21%;
+        }
+        &:after{
+          content: '';
+          position: absolute;
+          left: 21%;
+          top: -60px;
+          width: 0;
+          height: 0;
+          border: 23px solid transparent;
+          border-top-color: #fff;
+        }
+      }
     }
-
-    &.in {
-      overflow-y: visible;
-    }
-
-    // Undo the collapse side padding for navbars with containers to ensure
-    // alignment of right-aligned contents.
-    .navbar-fixed-top &,
-    .navbar-static-top &,
-    .navbar-fixed-bottom & {
-      padding-left: 0;
-      padding-right: 0;
-    }
+  }
+  .menu-top-menu-container{
+    text-align: center;
   }
 }
 
@@ -95,14 +119,19 @@
 
 .container > .navbar-header,
 .container > .navbar-collapse {
-  margin-right: -@navbar-padding-horizontal;
-  margin-left:  -@navbar-padding-horizontal;
-
-  @media (min-width: @grid-float-breakpoint) {
-    margin-right: 0;
-    margin-left:  0;
-  }
+  width:100%;
+  max-width: @container-lg - 300;
 }
+
+.container > .navbar-collapse {
+  max-width: @container-lg;
+}
+
+.container > .navbar-header{
+  margin: 0 auto;
+}
+
+
 
 
 //
@@ -179,23 +208,19 @@
   .navbar-vertical-align(34px);
   background-color: transparent;
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-  border: 1px solid transparent;
   border-radius: @border-radius-base;
 
   // Bars
   .icon-bar {
     display: block;
-    width: 22px;
-    height: 2px;
+    width: 30px;
+    height: 5px;
     border-radius: 1px;
   }
   .icon-bar + .icon-bar {
     margin-top: 4px;
   }
 
-  @media (min-width: @grid-float-breakpoint) {
-    display: none;
-  }
 }
 
 
@@ -374,7 +399,6 @@
 // Default navbar
 .navbar-default {
   background-color: @navbar-default-bg;
-  border-color: @navbar-default-border;
 
   .navbar-brand {
     color: @navbar-default-brand-color;
@@ -418,19 +442,35 @@
   }
 
   .navbar-toggle {
-    border-color: @navbar-default-toggle-border-color;
+    border: none;
+    position: relative;
     &:hover,
     &:focus {
-      background-color: @navbar-default-toggle-hover-bg;
+      //background-color: @navbar-default-toggle-hover-bg;
+      .icon-bar{
+        background-color: @asc-orange;
+      }
+      &:before{
+      content: "menu";
+      color:@asc-orange;
+    }
     }
     .icon-bar {
-      background-color: @navbar-default-toggle-icon-bar-bg;
+      background-color: @burger-buttons;
+    }
+    &:before{
+      content: "menu";
+      text-transform: uppercase;
+      position: absolute;
+      left: -40px;
+      padding-top: 2px;
     }
   }
 
   .navbar-collapse,
   .navbar-form {
-    border-color: @navbar-default-border;
+    border-color: @asc-orange;
+    border-width: 8px;
   }
 
   // Dropdown menu items

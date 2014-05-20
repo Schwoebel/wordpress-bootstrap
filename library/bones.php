@@ -107,7 +107,8 @@ function wp_bootstrap_footer_links() {
     		'menu' => 'footer_links', /* menu name */
     		'theme_location' => 'footer_links', /* where in the theme it's assigned */
     		'container_class' => 'footer-links clearfix', /* container class */
-    		'fallback_cb' => 'wp_bootstrap_footer_links_fallback' /* menu fallback */
+    		'fallback_cb' => 'wp_bootstrap_footer_links_fallback', /* menu fallback */
+    		'items_wrap' => '<ul><li id="item-id"><h4>Kontakt Oss</h4></li>%3$s</ul>'
     	)
 	);
 }

@@ -8,6 +8,16 @@ just edit things like thumbnail sizes, header images,
 sidebars, comments, ect.
 */
 
+define('SITE_ROOT', get_site_url() . '/');
+define('THM_PATH', get_template_directory_uri());
+define('TRAINING_INCLUDES', TEMPLATEPATH . '/includes');
+define('TRAINING_PRODUCT_COLORS', 5);
+
+/*WP Toolkit*/
+define('THEME_PATH', get_template_directory());
+define('THEME_URL', get_template_directory_uri());
+define('THEME_TEXTDOMAIN', 'wptoolkit');
+
 // Get Bones Core Up & Running!
 require_once('library/bones.php');            // core functions (don't remove)
 
@@ -15,7 +25,24 @@ require_once('library/bones.php');            // core functions (don't remove)
 require_once('library/shortcodes.php');
 
 // Admin Functions (commented out by default)
+
+function custom_autoload($class){
+    $file = THEME_PATH . '/toolkit/' . $class . '.class.php';
+    if(file_exists($file)){
+        include_once($file);
+    }
+}
+
+spl_autoload_register('custom_autoload');
+
+require_once(THEME_PATH . '/config.php');
 // require_once('library/admin.php');         // custom admin functions
+
+//ASConstruction Nav Menu
+register_nav_menus( array(
+  'about_us_footer' => 'Om AS Construction',
+  'our_projects' => 'AS Construction Projects'
+) );
 
 // Custom Backend Footer
 add_filter('admin_footer_text', 'wp_bootstrap_custom_admin_footer');
@@ -35,6 +62,7 @@ if ( ! isset( $content_width ) ) $content_width = 580;
 add_image_size( 'wpbs-featured', 780, 300, true );
 add_image_size( 'wpbs-featured-home', 970, 311, true);
 add_image_size( 'wpbs-featured-carousel', 970, 400, true);
+add_image_size( 'wpbs-featured-carousel-big', 1500, 782, true);
 
 /* 
 to add more sizes, simply copy a line from above 
@@ -450,6 +478,10 @@ if( !function_exists("theme_styles") ) {
         wp_register_style( 'bootstrap', get_template_directory_uri() . '/library/css/bootstrap.css', array(), '1.0', 'all' );
         wp_enqueue_style( 'bootstrap' );
 
+         // This is the compiled css file from LESS - this means you compile the LESS file locally and put it in the appropriate directory if you want to make any changes to the master bootstrap.css.
+        wp_register_style( 'theme', get_template_directory_uri() . '/library/css/theme.css', array(), '1.0', 'all' );
+        wp_enqueue_style( 'theme' );
+
         // For child themes
         wp_register_style( 'wpbs-style', get_stylesheet_directory_uri() . '/style.css', array(), '1.0', 'all' );
         wp_enqueue_style( 'wpbs-style' );
@@ -484,4 +516,58 @@ if( !function_exists( "theme_js" ) ) {
 }
 add_action( 'wp_enqueue_scripts', 'theme_js' );
 
+$labels = array(
+    'name'              => _x( 'Building Types', 'taxonomy general name' ),
+    'singular_name'     => _x( 'Building Type', 'taxonomy singular name' ),
+    'search_items'      => __( 'Search Building Types' ),
+    'all_items'         => __( 'All Building Types' ),
+    'parent_item'       => __( 'Parent Building Type' ),
+    'parent_item_colon' => __( 'Parent Building Type:' ),
+    'edit_item'         => __( 'Edit Building Type' ),
+    'update_item'       => __( 'Update Building Type' ),
+    'add_new_item'      => __( 'Add New Building Type' ),
+    'new_item_name'     => __( 'New Building Type Name' ),
+    'menu_name'         => __( 'Building Type' ),
+  );
+
+  $args = array(
+    'hierarchical'      => true,
+    'labels'            => $labels,
+    'show_ui'           => true,
+    'show_admin_column' => true,
+    'query_var'         => true,
+    'rewrite'           => array( 'slug' => 'building_type' ),
+  );
+
+  register_taxonomy( 'building_type', array( 'projekt' ), $args );
+
+function project_grid(){
+    $args = array(
+      'posts_per_page'   => 9,
+      'offset'           => 0,
+      'post_type'        => 'projekt',
+      'post_status'      => 'publish',
+      'suppress_filters' => true ); 
+    $projekts = get_posts($args);
+   
+    foreach ($projekts as $count => $projekt) {
+      echo '<div class="col-lg-4 projekt_grid_item" id="projekt_' . $count . '">';
+      echo get_the_post_thumbnail( $projekt->ID, 'wpbs-featured-home' );
+      echo projekt_info_square($projekt);
+      echo '</div>';
+    }
+
+}
+
+function projekt_info_square($projekt){
+  $meta = get_post_meta($projekt->ID);
+  $arkitekt = 'Arkitekt&nbsp;' . $meta['architect_value'][0];
+  $size = 'Yta:&nbsp;ca&nbsp;' .  $meta['building_size_value'][0] . '&nbsp;m2';
+  echo '<div class="project_info_overlay">';
+  echo sprintf('<h3>%s</h3>', $projekt->post_title);
+  echo sprintf('<p>%s</p>', $arkitekt);
+  echo sprintf('<p>%s</p>', $size);
+  echo do_shortcode('[button type="info" size="small" text="Se Mer av projektet &raquo;" url="' . $projekt->guid . '"] ' );;
+  echo '</div>';
+}
 ?>

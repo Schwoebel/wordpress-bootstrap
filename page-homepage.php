@@ -21,33 +21,53 @@ Template Name: Homepage
 								$featured_src = wp_get_attachment_image_src( $post_thumbnail_id, 'wpbs-featured-home' );
 							?>
 
-							<div class="jumbotron" style="background-image: url('<?php echo $featured_src[0]; ?>'); background-repeat: no-repeat; background-position: 0 0;">
-				
+							
 								<div class="page-header">
-									<h1><?php bloginfo('title'); ?><small><?php echo get_post_meta($post->ID, 'custom_tagline' , true);?></small></h1>
+									<h1><?php echo get_post_meta($post->ID, 'custom_tagline' , true);?></h1>
 								</div>				
 								
-							</div>
+							
 						
 						</header>
 						
-						<section class="row post_content">
+						<section class="row post_content top_blocks">
 						
-							<div class="col-sm-8">
+							<div class="col-sm-12">
 						
 								<?php the_content(); ?>
 								
 							</div>
 							
-							<?php get_sidebar('sidebar2'); // sidebar 2 ?>
-													
+							<?php //get_sidebar('sidebar2'); // sidebar 2 ?>
+														
 						</section> <!-- end article header -->
+						<section class="col-lg-12 mid_start_slideshow" style="padding:0; background-color: white;">
 						
-						<footer>
-			
-							<p class="clearfix"><?php the_tags('<span class="tags">' . __("Tags","wpbootstrap") . ': ', ', ', '</span>'); ?></p>
+							<div id="carousel">
+								<div class="col-lg-6 overlay">
+									<div class="col-lg-9 inner-overlay">
+										<h2>Vi är proffs på att bygga arkitektritade och unika hus</h2>
+										<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+										<ul class="front-page-bullet-list">
+											<li>Bygger Passivhus och energisnäla</li>
+											<li>Funnits sedan 2002</li>
+											<li>Byggt över 50 dokumenterade hus</li>
+										</ul>
+									</div>
+								</div>
+								<?php the_post_thumbnail( 'wpbs-featured-carousel-big');?>
+								
+							</div>
 							
-						</footer> <!-- end article footer -->
+							<?php //get_sidebar('sidebar2'); // sidebar 2 ?>
+														
+						</section> <!-- end article header -->
+						<section class="col-lg-12 project_grid" style="background-color: white;">
+							<h1>Se några tidigare referenser vy har byggt</h1>
+								<?php 
+									project_grid();
+								?>
+						</section>
 					
 					</article> <!-- end article -->
 					
